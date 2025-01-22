@@ -1,6 +1,5 @@
-// components/ViewCattleList.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { apiGet, apiDelete } from '../utils/apiService';
 
 const ViewCattleList = () => {
   const [cattleList, setCattleList] = useState([]);
@@ -10,10 +9,10 @@ const ViewCattleList = () => {
   useEffect(() => {
     const fetchCattle = async () => {
       try {
-        const response = await axios.get('https://mock-api.com/cattle');
-        setCattleList(response.data);
+        const data = await apiGet('/cattle');
+        setCattleList(data);
       } catch (err) {
-        setError('Failed to fetch cattle data.');
+        setError(err || 'Failed to fetch cattle data.');
       } finally {
         setLoading(false);
       }
@@ -24,10 +23,10 @@ const ViewCattleList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://mock-api.com/cattle/${id}`);
+      await apiDelete(`/cattle/${id}`);
       setCattleList((prevList) => prevList.filter((cattle) => cattle.id !== id));
     } catch (err) {
-      setError('Failed to delete cattle.');
+      alert(err || 'Failed to delete cattle.');
     }
   };
 
@@ -71,3 +70,4 @@ const ViewCattleList = () => {
 };
 
 export default ViewCattleList;
+

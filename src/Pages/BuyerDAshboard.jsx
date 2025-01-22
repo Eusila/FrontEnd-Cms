@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import BrowseCattle from './BrowseCattle';
-import PaymentPage from './PaymentPage';
+import BrowseCattle from '../Components/BrowseCattle'
+import PaymentPage from '../Pages/PaymentPage'
 
 const BuyerDashboard = () => {
   const [activeTab, setActiveTab] = useState('browse');

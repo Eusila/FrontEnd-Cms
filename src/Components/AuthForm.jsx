@@ -1,98 +1,139 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const AuthForm = () => {
-  const [isLogin, setIsLogin] = useState(true); 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(true);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    name: '',
+    rememberMe: false,
+  });
+
+  const toggleForm = () => setIsLogin(!isLogin);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password || (!isLogin && !confirmPassword)) {
-      setError('All fields are required');
-      return;
-    }
-
-    if (!isLogin && password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
+    const { email, password, name, rememberMe } = formData;
 
     if (isLogin) {
-      
-      if (email === 'admin@example.com' && password === 'password') {
-        navigate('/admin');
+      console.log('Login:', { email, password, rememberMe });
+      // Handle login API call
+      if (rememberMe) {
+        localStorage.setItem('token', 'dummyToken'); // Replace with real token
       } else {
-        setError('Invalid email or password');
+        sessionStorage.setItem('token', 'dummyToken'); // Replace with real token
       }
     } else {
-      
-      setSuccess('Registration successful! You can now log in.');
-      setError('');
+      console.log('Signup:', { email, password, name });
+      // Handle signup API call
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded shadow-md w-96">
-        <div className="flex justify-between mb-6">
-          <button
-            className={`px-4 py-2 w-1/2 ${isLogin ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'}`}
-            onClick={() => {
-              setIsLogin(true);
-              setError('');
-              setSuccess('');
-            }}
-          >
-            Login
-          </button>
-          <button
-            className={`px-4 py-2 w-1/2 ${!isLogin ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700'}`}
-            onClick={() => {
-              setIsLogin(false);
-              setError('');
-              setSuccess('');
-            }}
-          >
-            Sign Up
-          </button>
-        </div>
-
-        <form onSubmit={handleSubmit}>
-          <h1 className="text-2xl font-bold mb-4">{isLogin ? 'Login' : 'Sign Up'}</h1>
-          {error && <p className="text-red-500">{error}</p>}
-          {success && <p className="text-green-500">{success}</p>}
+    <div className="max-w-md mx-auto p-6 bg-white rounded shadow-md">
+      <h1 className="text-4xl font-bold mb-4,">
+        {isLogin ? 'Login' : 'Create an Account'}
+      </h1>
+      <form onSubmit={handleSubmit}>
+        {!isLogin && (
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded mt-1"
+              placeholder="Enter your FullName"
+              required={!isLogin}
+            />
+          </div>
+        )}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">
+            Email
+          </label>
           <input
             type="email"
-            placeholder="Email"
-            className="w-full p-2 border border-gray-300 rounded mb-4"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded mt-1"
+            placeholder="Enter your email"
+            required
           />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">
+            Password
+          </label>
           <input
             type="password"
-            placeholder="Password"
-            className="w-full p-2 border border-gray-300 rounded mb-4"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded mt-1"
+            placeholder="Enter your password"
+            required
           />
-          {!isLogin && (
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              className="w-full p-2 border border-gray-300 rounded mb-4"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          )}
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded w-full">
-            {isLogin ? 'Login' : 'Sign Up'}
+        </div>
+
+        {/* Remember Me and Forgot Password */}
+        {isLogin && (
+          <div className="flex items-center justify-between mb-4">
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                name="rememberMe"
+                checked={formData.rememberMe}
+                onChange={handleChange}
+                className="mr-2"
+              />
+              Remember Me
+            </label>
+            <button
+              type="button"
+              className="text-blue-500 hover:underline text-sm"
+              onClick={() => console.log('Forgot Password Clicked')}
+            >
+              Forgot Password?
+            </button>
+          </div>
+        )}
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          {isLogin ? 'Login' : 'Sign Up'}
+        </button>
+      </form>
+
+      {/* Toggle Form */}
+      <div className="mt-4 text-center">
+        <p>
+          {isLogin
+            ? "Don't have an account?"
+            : 'Already have an account?'}{' '}
+          <button
+            type="button"
+            onClick={toggleForm}
+            className="text-blue-500 hover:underline"
+          >
+            {isLogin ? 'Sign Up' : 'Login'}
           </button>
-        </form>
+        </p>
       </div>
     </div>
   );
@@ -100,5 +141,4 @@ const AuthForm = () => {
 
 export default AuthForm;
 
-  
 

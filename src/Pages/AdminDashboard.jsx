@@ -1,4 +1,3 @@
-// components/AdminDashboard.js
 import React, { useState } from 'react';
 import UserManagement from './UserManagement';
 import CattleManagement from './CattleManagement';
