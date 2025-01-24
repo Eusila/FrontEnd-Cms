@@ -1,5 +1,6 @@
 {/*import React from 'react';
 import { Link } from 'react-router-dom';
+import img
 
 const LandingPage = () => {
   return (
@@ -94,11 +95,11 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-blue-700 rounded-lg p-6 shadow-md">
               <p className="mb-4">"CMS has transformed how I manage my cattle listings. Highly recommend it!"</p>
-              <h4 className="font-semibold">- John, Seller</h4>
+              <h4 className="font-semibold">- Fidel, Seller</h4>
             </div>
             <div className="bg-blue-700 rounded-lg p-6 shadow-md">
               <p className="mb-4">"The secure transactions feature is amazing. I trust CMS for all my purchases."</p>
-              <h4 className="font-semibold">- Jane, Buyer</h4>
+              <h4 className="font-semibold">- Fidlema, Buyer</h4>
             </div>
             <div className="bg-blue-700 rounded-lg p-6 shadow-md">
               <p className="mb-4">"The admin dashboard is intuitive and user-friendly. Great job!"</p>
