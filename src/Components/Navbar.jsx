@@ -1,30 +1,38 @@
+// Navbar.js
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import bg1 from '../assets/images/bg1.jpg';
+import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isLoggedIn, logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userRole');
+    logout();
     navigate('/login');
   };
 
   const isActive = (path) => location.pathname === path;
 
+  // If the user is not logged in, return null or a different component
+  if (!isLoggedIn) {
+    return null; 
+  }
+
   return (
-    <nav className="bg-blue-600 text-white shadow-md">
+    <nav className="bg-blue-500 text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
             <img
-              src="/path-to-logo/cms-logo.png" // Replace with your logo's actual path
+              src={bg1} 
               alt="CMS Logo"
               className="h-8 w-8 mr-2"
             />
-            <Link to="/" className="text-2xl font-bold">
+            <Link to="/" className="text-4xl font-bold">
               CMS
             </Link>
           </div>

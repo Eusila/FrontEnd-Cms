@@ -3,6 +3,8 @@ import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import AppRoutes from './Routes/AppRoutes';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
+import { AuthProvider } from './context/AuthContext'
+import './App.css';
 
 const App = () => {
   const location = useLocation();
@@ -20,8 +22,11 @@ const App = () => {
 
 const WrappedApp = () => (
   <Router>
-    <App />
+    <AuthProvider> 
+      <App />
+    </AuthProvider>
   </Router>
 );
 
 export default WrappedApp;
+

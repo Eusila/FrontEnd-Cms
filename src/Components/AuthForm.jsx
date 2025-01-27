@@ -6,6 +6,7 @@ const AuthForm = () => {
     email: '',
     password: '',
     name: '',
+    role: 'buyer', // Default role
     rememberMe: false,
   });
 
@@ -21,28 +22,28 @@ const AuthForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password, name, rememberMe } = formData;
+    const { email, password, name, role, rememberMe } = formData;
 
     if (isLogin) {
       console.log('Login:', { email, password, rememberMe });
       // Handle login API call
       if (rememberMe) {
-        localStorage.setItem('token', 'dummyToken'); // Replace with real token
-      } else {
-        sessionStorage.setItem('token', 'dummyToken'); // Replace with real token
+        localStorage.setItem('token', 'dummyToken'); 
+        sessionStorage.setItem('token', 'dummyToken'); 
       }
     } else {
-      console.log('Signup:', { email, password, name });
+      console.log('Signup:', { email, password, name, role });
       // Handle signup API call
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded shadow-md">
-      <h1 className="text-4xl font-bold mb-4,">
+    <div className="max-w-md mx-auto p-6 bg-blue-400 rounded shadow-md mt-10">
+      <h1 className="text-4xl font-bold mb-4">
         {isLogin ? 'Login' : 'Create an Account'}
       </h1>
       <form onSubmit={handleSubmit}>
+        {/* Name Field (Signup Only) */}
         {!isLogin && (
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
@@ -54,11 +55,13 @@ const AuthForm = () => {
               value={formData.name}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded mt-1"
-              placeholder="Enter your FullName"
+              placeholder="Enter your Full Name"
               required={!isLogin}
             />
           </div>
         )}
+
+        {/* Email Field */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Email
@@ -73,6 +76,8 @@ const AuthForm = () => {
             required
           />
         </div>
+
+        {/* Password Field */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Password
@@ -88,7 +93,26 @@ const AuthForm = () => {
           />
         </div>
 
-        {/* Remember Me and Forgot Password */}
+        {/* Role Selection (Signup Only) */}
+        {!isLogin && (
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">
+              Select Role
+            </label>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded mt-1"
+              required
+            >
+              <option value="buyer">Buyer</option>
+              <option value="seller">Seller</option>
+            </select>
+          </div>
+        )}
+
+        {/* Remember Me and Forgot Password (Login Only) */}
         {isLogin && (
           <div className="flex items-center justify-between mb-4">
             <label className="flex items-center">
@@ -103,7 +127,7 @@ const AuthForm = () => {
             </label>
             <button
               type="button"
-              className="text-blue-500 hover:underline text-sm"
+              className="text-blue-600 hover:underline text-sm"
               onClick={() => console.log('Forgot Password Clicked')}
             >
               Forgot Password?
@@ -114,7 +138,7 @@ const AuthForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
         >
           {isLogin ? 'Login' : 'Sign Up'}
         </button>
@@ -129,7 +153,7 @@ const AuthForm = () => {
           <button
             type="button"
             onClick={toggleForm}
-            className="text-blue-500 hover:underline"
+            className="text-blue-600 hover:underline"
           >
             {isLogin ? 'Sign Up' : 'Login'}
           </button>
@@ -140,5 +164,6 @@ const AuthForm = () => {
 };
 
 export default AuthForm;
+
 
 
