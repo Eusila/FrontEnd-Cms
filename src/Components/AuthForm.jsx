@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext'; // Assuming you have an AuthContext
 
 const AuthForm = () => {
+  const { login, signup } = useAuth(); // Assuming you have login and signup functions in your context
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     email: '',
+    username: '',
+    contact: '',
+    address: '',
     password: '',
-    name: '',
-    role: 'buyer', // Default role
+    role: 'buyer',
     rememberMe: false,
   });
 
@@ -20,48 +24,76 @@ const AuthForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    const { email, password, name, role, rememberMe } = formData;
+    const { email, password, rememberMe } = formData;
+    // Call the login function from context
+    login({ email, password, rememberMe });
+  };
 
-    if (isLogin) {
-      console.log('Login:', { email, password, rememberMe });
-      // Handle login API call
-      if (rememberMe) {
-        localStorage.setItem('token', 'dummyToken'); 
-        sessionStorage.setItem('token', 'dummyToken'); 
-      }
-    } else {
-      console.log('Signup:', { email, password, name, role });
-      // Handle signup API call
-    }
+  const handleSignup = (e) => {
+    e.preventDefault();
+    const { email, username, contact, address, password, role } = formData;
+    // Call the signup function from context
+    signup({ email, username, contact, address, password, role });
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-blue-400 rounded shadow-md mt-10">
-      <h1 className="text-4xl font-bold mb-4">
+    <div className="max-w-md mx-auto p-6 bg-blue-400 rounded shadow-md mt-6 mb-6">
+      <h1 className="text-4xl font-bold mb-6 text-center">
         {isLogin ? 'Login' : 'Create an Account'}
       </h1>
-      <form onSubmit={handleSubmit}>
-        {/* Name Field (Signup Only) */}
+      <form onSubmit={isLogin ? handleLogin : handleSignup}>
+        {!isLogin && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Username
+              </label>
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded mt-1"
+                placeholder="Username"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Contact
+              </label>
+              <input
+                type="tel"
+                name="contact"
+                value={formData.contact}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded mt-1"
+                placeholder="Phone Number"
+                required
+              />
+            </div>
+          </div>
+        )}
+
         {!isLogin && (
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
-              Name
+              Address
             </label>
             <input
               type="text"
-              name="name"
-              value={formData.name}
+              name="address"
+              value={formData.address}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded mt-1"
-              placeholder="Enter your Full Name"
-              required={!isLogin}
+              placeholder="Address e.g Nakuru"
+              required
             />
           </div>
         )}
 
-        {/* Email Field */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Email
@@ -72,12 +104,11 @@ const AuthForm = () => {
             value={formData.email}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded mt-1"
-            placeholder="Enter your email"
-            required
+            placeholder="Email"
+            required={!isLogin}
           />
         </div>
 
-        {/* Password Field */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Password
@@ -93,7 +124,6 @@ const AuthForm = () => {
           />
         </div>
 
-        {/* Role Selection (Signup Only) */}
         {!isLogin && (
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">
@@ -112,7 +142,6 @@ const AuthForm = () => {
           </div>
         )}
 
-        {/* Remember Me and Forgot Password (Login Only) */}
         {isLogin && (
           <div className="flex items-center justify-between mb-4">
             <label className="flex items-center">
@@ -135,7 +164,6 @@ const AuthForm = () => {
           </div>
         )}
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
@@ -164,6 +192,7 @@ const AuthForm = () => {
 };
 
 export default AuthForm;
+
 
 
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { apiPost } from '../utils/apiService';
+import { apiPost } from '../Services/apiService'
 
 const AddCattleForm = () => {
   const [formData, setFormData] = useState({
@@ -82,7 +82,7 @@ const AddCattleForm = () => {
             value={formData.categoryName}
             onChange={handleChange}
             className="w-full p-2 border rounded"
-            placeholder="e.g., Dairy, Beef"
+            placeholder="i.e Registered or Commercial(only their products is sold)"
             required
           />
         </div>
@@ -111,7 +111,7 @@ const AddCattleForm = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Price ($)</label>
+          <label className="block text-gray-700 mb-2">Price (ksh)</label>
           <input
             type="number"
             name="price"

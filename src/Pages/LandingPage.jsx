@@ -11,6 +11,7 @@ const LandingPage = () => {
       <div
         className="bg-cover bg-center h-screen relative"
         style={{ backgroundImage: `url(${img9})` }} 
+        id="home"
       >
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="relative z-10 flex flex-col items-center justify-centre h-full text-white text-center">
@@ -34,7 +35,7 @@ const LandingPage = () => {
         </div>
       </div>
 
-      <section className="py-12 bg-gray-100">
+      <section  id="features" className="py-12 bg-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl font-bold mb-6">Why Choose CMS?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -60,8 +61,8 @@ const LandingPage = () => {
 
 
 
-      {/* Testimonials Section */}
-      <section className="py-12 bg-blue-500 text-white">
+      
+      <section id="services"className="py-12 bg-blue-500 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-6">What Our Users Say</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -85,43 +86,6 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
-
-{/*import React from 'react';
-import { Link } from 'react-router-dom';
-import img1 from '/assets'
-
-const LandingPage = () => {
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
-      <div className="text-center px-6">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">
-          Welcome to Cattle Management System
-        </h1>
-        <p className="text-lg md:text-xl mb-8">
-          Buy, sell, and manage cattle listings seamlessly. Whether you're a buyer or a seller, our platform provides the tools you need.
-        </p>
-        <div className="flex space-x-4 justify-center">
-          <Link
-            to="/register"
-            className="bg-white text-blue-600 font-semibold py-2 px-6 rounded hover:bg-gray-100 transition"
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            className="bg-blue-700 font-semibold py-2 px-6 rounded hover:bg-blue-800 transition"
-          >
-            Sign Up
-          </Link>
-        </div>
-      </div>
-      
-    </div>
-  );
-};
-
-export default LandingPage;*/}
 
 
 

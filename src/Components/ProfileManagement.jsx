@@ -1,4 +1,4 @@
-// components/ProfileManagement.js
+
 import React, { useState, useEffect } from 'react';
 import { apiGet, apiPost } from '../utils/apiService';
 

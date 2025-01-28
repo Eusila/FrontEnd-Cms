@@ -17,13 +17,17 @@ const AppRoutes = () => {
       <Route path="/" element={<LandingPage />} />
       <Route path="/register" element={<AuthForm />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      
 
       {/*<Route path="/admin" element={<AdminDashboard />} />
       <Route path="/seller" element={<SellerDashboard />} />
       <Route path="/seller/add-cattle" element={<AddCattleForm />} />
       <Route path="/seller/view-cattle" element={<ViewCattleList />} />
       <Route path="/buyer" element={<BuyerDashboard />} />
-      <Route path="/buyer/browse-cattle" element={<BrowseCattle />} />*/}
+      <Route path="/buyer/browse-cattle" element={<BrowseCattle />} />
+      <Route path="/admin/manage-users" element={<UserManagement/>} />
+      <Route path="/admin/manage-cattle" element={<CattleManagement />} />
+      */}
       
     </Routes>
   );

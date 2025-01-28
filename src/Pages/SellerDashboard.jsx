@@ -1,42 +1,47 @@
 import React, { useState } from 'react';
-import AddCattleForm from './AddCattleForm';
-import ViewCattleList from './ViewCattleList';
+import AddCattleForm from '../Components/AddCattleForm';
+import ViewCattleList from '../Components/ViewCattleList';
 
 const SellerDashboard = () => {
   const [activeTab, setActiveTab] = useState('viewCattle'); // State for toggling between tabs
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Seller Dashboard</h1>
-
-      {/* Navigation Tabs */}
-      <div className="flex space-x-4 mb-6">
-        <button
-          onClick={() => setActiveTab('viewCattle')}
-          className={`py-2 px-4 rounded ${
-            activeTab === 'viewCattle' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-          }`}
-        >
-          View Cattle
-        </button>
-        <button
-          onClick={() => setActiveTab('addCattle')}
-          className={`py-2 px-4 rounded ${
-            activeTab === 'addCattle' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-          }`}
-        >
-          Add Cattle
-        </button>
+    <div className="min-h-screen bg-gray-100">
+      <div className="bg-blue-500 text-white p-4">
+        <h1 className="text-2xl font-bold">Seller Dashboard</h1>
       </div>
-
-      {/* Conditional Rendering Based on Active Tab */}
-      <div className="bg-white shadow-md rounded-lg p-6">
-        {activeTab === 'viewCattle' ? <ViewCattleList /> : <AddCattleForm />}
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-1/4 bg-gray-200 h-screen p-4">
+          <button
+            onClick={() => setActiveTab('viewCattle')}
+            className={`block w-full text-left px-4 py-2 mb-2 ${
+              activeTab === 'viewCattle' ? 'bg-blue-500 text-white' : 'bg-gray-100'
+            }`}
+          >
+            View Cattle
+          </button>
+          <button
+            onClick={() => setActiveTab('addCattle')}
+            className={`block w-full text-left px-4 py-2 ${
+              activeTab === 'addCattle' ? 'bg-blue-500 text-white' : 'bg-gray-100'
+            }`}
+          >
+            Add Cattle
+          </button>
+        </aside>
+        {/* Content */}
+        <main className="w-3/4 p-4">
+          <div className="bg-white shadow-md rounded-lg p-6">
+            {activeTab === 'viewCattle' ? <ViewCattleList /> : <AddCattleForm />}
+          </div>
+        </main>
       </div>
     </div>
   );
 };
 
 export default SellerDashboard;
+
 
 

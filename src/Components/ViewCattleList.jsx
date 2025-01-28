@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { apiGet, apiDelete } from '../utils/apiService';
+import { apiGet, apiDelete } from '../Services/apiService';
 
 const ViewCattleList = () => {
   const [cattleList, setCattleList] = useState([]);

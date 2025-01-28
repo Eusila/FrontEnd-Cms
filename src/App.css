@@ -4,7 +4,9 @@
   padding: 2rem;
   text-align: center;
 } */
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
 }
 
@@ -19,3 +21,12 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
+footer {
+  margin-top: auto;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+

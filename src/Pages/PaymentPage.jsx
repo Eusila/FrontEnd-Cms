@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { apiPost } from '../utils/apiService';
+import { apiPost } from '../Services/apiService'
 
 const PaymentPage = ({ cattleId }) => {
   const [cardNumber, setCardNumber] = useState('');

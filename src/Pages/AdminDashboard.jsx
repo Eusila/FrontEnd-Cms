@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import UserManagement from './UserManagement';
-import CattleManagement from './CattleManagement';
+import UserManagement from '../Components/UserManagement';
+import CattleManagement from '../Components/CattleManagement'
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('users');

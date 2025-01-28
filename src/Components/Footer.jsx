@@ -1,39 +1,72 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { useAuth } from '../context/AuthContext'; 
 const Footer = () => {
+  const { isLoggedIn, user } = useAuth(); 
+
   return (
     <footer className="bg-gray-700 text-white py-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Section Links */}
+          
           <div>
             <h3 className="text-lg font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="hover:underline">
-                  Home
-                </Link>
+              <a
+              href="#home" 
+              className=
+               
+              "hover:underline"
+            >
+              Home
+            </a>
+               
               </li>
-              <li>
-                <Link to="/buyer" className="hover:underline">
-                  Buyer Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link to="/seller" className="hover:underline">
-                  Seller Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link to="/admin" className="hover:underline">
-                  Admin Dashboard
-                </Link>
-              </li>
+
+              {isLoggedIn ? (
+                <>
+                  {/* links if the user is logged in */}
+                  {user?.role === 'buyer' && (
+                    <li>
+                      <Link to="/buyer" className="hover:underline">
+                        Buyer Dashboard
+                      </Link>
+                    </li>
+                  )}
+                  {user?.role === 'seller' && (
+                    <li>
+                      <Link to="/seller" className="hover:underline">
+                        Seller Dashboard
+                      </Link>
+                    </li>
+                  )}
+                  {user?.role === 'admin' && (
+                    <li>
+                      <Link to="/admin" className="hover:underline">
+                        Admin Dashboard
+                      </Link>
+                    </li>
+                  )}
+                </>
+              ) : (
+                <>
+                  {/* Render these links if the user is not logged in */}
+                  <li>
+                    <Link to="/register" className="hover:underline">
+                      Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/register" className="hover:underline">
+                      Sign Up
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 
-          {/* Contact Information */}
+          
           <div>
             <h3 className="text-lg font-bold mb-4">Contact Us</h3>
             <p>
@@ -50,11 +83,11 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* About */}
+          
           <div>
             <h3 className="text-lg font-bold mb-4">About CMS</h3>
             <p>
-              CMS (Cattle Management System) helps buyers, sellers, and admins
+              CMS (Cattle Management System) is a platform that helps buyers, sellers, and admins
               manage cattle listings efficiently. Contact us for help or
               feedback!
             </p>
@@ -69,3 +102,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
