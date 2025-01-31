@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-// Create Axios instance
 const axiosInstance = axios.create({
-  baseURL: 'https://mock-api.com', // Replace with your API base URL
+  baseURL: 'http://localhost:8080', 
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
@@ -12,7 +11,7 @@ const axiosInstance = axios.create({
 // Request interceptor to add Authorization header if token is present
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token'); // Adjust based on your auth logic
+    const token = localStorage.getItem('token'); 
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }

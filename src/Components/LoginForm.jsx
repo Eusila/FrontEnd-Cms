@@ -6,6 +6,8 @@ const LoginForm = ({ login, toggleForm }) => {
     password: '',
     rememberMe: false,
   });
+  const [error, setError] = useState(''); // State for error messages
+  const [loading, setLoading] = useState(false); // State for loading
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -15,21 +17,35 @@ const LoginForm = ({ login, toggleForm }) => {
     }));
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError(''); // Reset error state
+    setLoading(true); // Set loading state
+
     const { email, password, rememberMe } = formData;
-    login({ email, password, rememberMe });
+
+    try {
+      await login({ email, password, rememberMe });
+      // Optionally, handle successful login (e.g., redirect)
+    } catch (err) {
+      setError('Login failed: ' + err); // Set error message
+    } finally {
+      setLoading(false); // Reset loading state
+    }
   };
 
   return (
     <form onSubmit={handleLogin}>
+      {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
+
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-gray-700" htmlFor="email">
           Email
         </label>
         <input
           type="email"
           name="email"
+          id="email" // Added id for accessibility
           value={formData.email}
           onChange={handleChange}
           className="w-full px-4 py-2 border rounded mt-1"
@@ -39,12 +55,13 @@ const LoginForm = ({ login, toggleForm }) => {
       </div>
 
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-gray-700" htmlFor="password">
           Password
         </label>
         <input
           type="password"
           name="password"
+          id="password" // Added id for accessibility
           value={formData.password}
           onChange={handleChange}
           className="w-full px-4 py-2 border rounded mt-1"
@@ -75,9 +92,10 @@ const LoginForm = ({ login, toggleForm }) => {
 
       <button
         type="submit"
-        className="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700"
+        className={`w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+        disabled={loading} // Disable button while loading
       >
-        Login
+        {loading ? 'Logging in...' : 'Login'} {/* Change button text based on loading state */}
       </button>
 
       {/* Toggle Form */}
@@ -98,3 +116,4 @@ const LoginForm = ({ login, toggleForm }) => {
 };
 
 export default LoginForm;
+

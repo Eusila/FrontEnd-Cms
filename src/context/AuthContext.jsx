@@ -1,64 +1,75 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'; // Import useHistory for navigation
+import { apiPost } from '../Services/apiService';
+import jwtDecode from 'jwt-decode';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const history = useHistory(); // Initialize useHistory
 
   useEffect(() => {
-    // Fetch token and user data from localStorage when the app initializes
     const token = localStorage.getItem('token');
     const userData = localStorage.getItem('user');
 
     if (token && userData) {
-      setIsLoggedIn(true);
-      setUser(JSON.parse(userData));
+      const decodedToken = jwtDecode(token);
+      const isExpired = decodedToken.exp * 1000 < Date.now();
+
+      if (!isExpired) {
+        setIsLoggedIn(true);
+        setUser(JSON.parse(userData));
+      } else {
+        logout();
+      }
     }
   }, []);
 
   const login = async ({ email, password, rememberMe }) => {
     try {
-      // Mock API request to authenticate user
-      const response = await mockApiLogin(email, password);
+      const response = await apiPost('/api/v1/users/login', { email, password });
+      const { token, user } = response;
 
-      if (response.success) {
-        const { token, user } = response.data;
+      if (rememberMe) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+      }
 
-        if (rememberMe) {
-          // Persist token and user info in localStorage for "Remember Me" functionality
-          localStorage.setItem('token', token);
-          localStorage.setItem('user', JSON.stringify(user));
-        }
+      setIsLoggedIn(true);
+      setUser(user);
 
-        setIsLoggedIn(true);
-        setUser(user);
+      
+      if (user.role === 'admin') {
+        history.push('/admin-dashboard'); 
       } else {
-        console.error('Login failed:', response.message);
+        history.push('/user-dashboard'); 
       }
     } catch (error) {
-      console.error('Error during login:', error);
+      console.error('Login failed:', error);
     }
   };
 
   const signup = async ({ email, username, contact, address, password, role }) => {
     try {
-      // Mock API request to create a new user
-      const response = await mockApiSignup({ email, username, contact, address, password, role });
+      const response = await apiPost('/api/v1/users/register', {
+        email,
+        username,
+        contact,
+        address,
+        password,
+        role,
+      });
+      const { token, user } = response;
 
-      if (response.success) {
-        const { token, user } = response.data;
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
 
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-
-        setIsLoggedIn(true);
-        setUser(user);
-      } else {
-        console.error('Signup failed:', response.message);
-      }
+      setIsLoggedIn(true);
+      setUser(user);
     } catch (error) {
-      console.error('Error during signup:', error);
+      console.error('Signup failed:', error);
     }
   };
 
@@ -78,33 +89,5 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => useContext(AuthContext);
 
-// Mock API login function
-const mockApiLogin = async (email, password) => {
-  // Simulating an API response
-  if (email === 'user@example.com' && password === 'password123') {
-    return {
-      success: true,
-      data: {
-        token: 'mockToken123',
-        user: { name: 'John Doe', role: 'buyer', email },
-      },
-    };
-  }
-  return { success: false, message: 'Invalid email or password' };
-};
 
-// Mock API signup function
-const mockApiSignup = async (userData) => {
-  // Simulating an API response
-  return {
-    success: true,
-    data: {
-      token: 'mockSignupToken123',
-      user: {
-        name: userData.username,
-        role: userData.role,
-        email: userData.email,
-      },
-    },
-  };
-};
+
