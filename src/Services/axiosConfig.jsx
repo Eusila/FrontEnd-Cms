@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Response interceptor for error handling
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {

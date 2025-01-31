@@ -19,8 +19,8 @@ const LoginForm = ({ login, toggleForm }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(''); // Reset error state
-    setLoading(true); // Set loading state
+    setError(''); 
+    setLoading(true); 
 
     const { email, password, rememberMe } = formData;
 
