@@ -3,8 +3,9 @@ import { Route, Routes } from 'react-router-dom';
 import AuthForm from '../Components/AuthForm';
 import LandingPage from '../Pages/LandingPage';
 import ForgotPassword from '../Components/ForgotPassword';
-//import AdminDashboard from '../Pages/AdminDashboard';
+import AdminDashboard from '../Pages/AdminDashboard';
 //import AddCattleForm from '../Components/AddCattleForm';
+
 //import ViewCattleList from '../Components/ViewCattleList';
 //import PaymentPage from '../Pages/PaymentPage';
 //import BuyerDashboard from '../Pages/BuyerDAshboard';
@@ -17,6 +18,7 @@ const AppRoutes = () => {
       <Route path="/" element={<LandingPage />} />
       <Route path="/register" element={<AuthForm />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/admin" element={<AdminDashboard />} />
       
 
       {/*<Route path="/admin" element={<AdminDashboard />} />

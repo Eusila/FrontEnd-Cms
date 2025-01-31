@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import bg1 from '../assets/images/bg1.jpg';
+import img1 from '../assets/images/img1.jpg';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
@@ -23,16 +23,42 @@ const Navbar = () => {
             {/* Logo */}
             <div className="flex items-center">
               <img
-                src={bg1}
+                src={img1}
                 alt="CMS Logo"
                 className="h-8 w-8 mr-2"
               />
               <Link to="/" className="text-4xl font-bold">
-                CMS
+                MIFUGOCLOUD
               </Link>
             </div>
 
-            
+            {/* Hamburger Menu for Mobile */}
+            <div className="md:hidden">
+              <button
+                className="text-white focus:outline-none"
+                onClick={() => {
+                  const menu = document.getElementById('mobile-menu');
+                  menu.classList.toggle('hidden');
+                }}
+              >
+                {/* Hamburger Icon */}
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                </svg>
+              </button>
+            </div>
+
             <div className="hidden md:flex space-x-4">
               <Link
                 to="/buyer"
@@ -60,7 +86,6 @@ const Navbar = () => {
               </Link>
             </div>
 
-          
             <div>
               <button
                 onClick={handleLogout}
@@ -69,6 +94,36 @@ const Navbar = () => {
                 Logout
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <div className="md:hidden" id="mobile-menu">
+          <div className="flex flex-col space-y-2 px-4 py-2 bg-blue-500">
+            <Link
+              to="/buyer"
+              className={`${
+                isActive('/buyer') ? 'bg-blue-800' : ''
+              } px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700`}
+            >
+              Buyer Dashboard
+            </Link>
+            <Link
+              to="/seller"
+              className={`${
+                isActive('/seller') ? 'bg-blue-800' : ''
+              } px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700`}
+            >
+              Seller Dashboard
+            </Link>
+            <Link
+              to="/admin"
+              className={`${
+                isActive('/admin') ? 'bg-blue-800' : ''
+              } px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700`}
+            >
+              Admin Dashboard
+            </Link>
           </div>
         </div>
       </nav>
@@ -80,22 +135,48 @@ const Navbar = () => {
     <nav className="bg-blue-800 text-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-         
           <div className="flex items-center">
             <img
-              src={bg1}
+              src={img1}
               alt="CMS Logo"
-              className="h-8 w-8 mr-2"
+              className="h-8 w-8 mr-1"
             />
-            <Link to="/" className="text-4xl font-bold">
-              CMS
+            <Link to="/" className="text-3xl font-bold">
+              MIFUGOCLOUD
             </Link>
+          </div>
+
+          {/* Hamburger Menu for Mobile */}
+          <div className="md:hidden">
+            <button
+              className="text-white focus:outline-none"
+              onClick={() => {
+                const menu = document.getElementById('mobile-menu');
+                menu.classList.toggle('hidden');
+              }}
+            >
+              {/* Hamburger Icon */}
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+            </button>
           </div>
 
           {/* Navigation Links for non-logged-in users */}
           <div className="hidden md:flex space-x-4">
             <a
-              href="#home" // Use <a> instead of <Link> because the #points to another page
+              href="#home"
               className={`${
                 isActive('#home') ? 'bg-blue-800' : ''
               } px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700`}
@@ -103,7 +184,7 @@ const Navbar = () => {
               Home
             </a>
             <a
-              href="#features" 
+              href="#features"
               className={`${
                 isActive('#features') ? 'bg-blue-800' : ''
               } px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700`}
@@ -111,7 +192,7 @@ const Navbar = () => {
               Features
             </a>
             <a
-              href="#services" 
+              href="#services"
               className={`${
                 isActive('#services') ? 'bg-blue-800' : ''
               } px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700`}
@@ -121,8 +202,39 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <div className="md:hidden" id="mobile-menu">
+        <div className="flex flex-col space-y-2 px-4 py-2 bg-blue-800">
+          <a
+            href="#home"
+            className={`${
+              isActive('#home') ? 'bg-blue-800' : ''
+            } px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700`}
+          >
+            Home
+          </a>
+          <a
+            href="#features"
+            className={`${
+              isActive('#features') ? 'bg-blue-800' : ''
+            } px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700`}
+          >
+            Features
+          </a>
+          <a
+            href="#services"
+            className={`${
+              isActive('#services') ? 'bg-blue-800' : ''
+            } px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-700`}
+          >
+            Services
+          </a>
+        </div>
+      </div>
     </nav>
   );
 };
 
 export default Navbar;
+
